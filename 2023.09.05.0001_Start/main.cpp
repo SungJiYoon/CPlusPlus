@@ -20,7 +20,6 @@ int main() {
                           // 실수 / 실수 
 
     cout << a << " / " << b << " = " << fret << endl;
-    //테스트
 
     return 0;
 }
