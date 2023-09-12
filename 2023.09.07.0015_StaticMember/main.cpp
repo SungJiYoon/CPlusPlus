@@ -10,10 +10,8 @@ private:
     int _attack;
     int _defense;
 
-    static int MonsterCount;   // 정적멤버변수 , 클래스 변수 , 정적멤버변수도 접근제어자의 영향을 받습니다.
-
 public:
-
+    static int MonsterCount;   // 정적멤버변수 , 클래스 변수
 
     Monster(string name, int health, int attack, int defense)
         : _name(name), _health(health), _attack(attack), _defense(defense)
@@ -29,13 +27,6 @@ public:
     {
         cout << "Monster 소멸자 호출" << endl;
         MonsterCount--;
-    }
-
-    static int GetMonsterCount() {   // 정적멤버함수, 클래스함수
-       // 정적멤버함수안에서는 멤버변수에 접근하면 안됩니다.
-       //_health = 100;
-
-        return MonsterCount;
     }
 
     void Info() {
@@ -54,22 +45,22 @@ int Monster::MonsterCount = 0; // 정적멤버변수의 초기화는 클래스의 외부에서 해야
 int main() {
 
     Monster dragon("dragon", 100, 300, 200);
-    cout << "전체 몬스터의 갯수: " << Monster::GetMonsterCount() << endl;   // :: 범위지정연산자(scoupe 연산자)
+    cout << "전체 몬스터의 갯수: " << Monster::MonsterCount << endl;
 
     {
         Monster ogre("ogre", 60, 10, 8);
-        cout << "전체 몬스터의 갯수: " << Monster::GetMonsterCount() << endl;
+        cout << "전체 몬스터의 갯수: " << Monster::MonsterCount << endl;
         {
             Monster troll("troll", 60, 15, 10);
 
-            cout << "전체 몬스터의 갯수: " << Monster::GetMonsterCount() << endl;
+            cout << "전체 몬스터의 갯수: " << Monster::MonsterCount << endl;
         }
 
-        cout << "전체 몬스터의 갯수: " << Monster::GetMonsterCount() << endl;
+        cout << "전체 몬스터의 갯수: " << Monster::MonsterCount << endl;
     }
 
     Monster slime("slime", 30, 20, 5);
-    cout << "전체 몬스터의 갯수: " << Monster::GetMonsterCount() << endl;
+    cout << "전체 몬스터의 갯수: " << Monster::MonsterCount << endl;
 
     return 0;
 }
