@@ -17,107 +17,95 @@ using namespace std;
 
 // Barista, Cashier, guest
 
-enum DrinkType {
-    COFFEE,
-    LATTE,
-    COLA,
-    TEA,
-    BANILLALATTE
-};
 
 class Drink {
-private:
-    DrinkType _type;
 public:
-    Drink(DrinkType type)
-        : _type(type)
-    {}
+    Drink(){}
 
-    DrinkType GetType() {
-        return _type;
-    }
-
-    string GetName() {
+    virtual string GetName() {
         return "음료";
     }
 
-    void MakeADrink() {
+    virtual void MakeADrink() { // 가상함수
         cout << "음료를 만듭니다." << endl;
     }
 };
 
 class Coffee : public Drink {
 public:
-    Coffee()
-        : Drink(COFFEE)
-    {}
+    Coffee(){}
 
-    string GetName() {
+    string GetName() override {
         return "커피";
     }
 
-    void MakeADrink() {
+    void MakeADrink() override {  // 부모의 가상함수를 자식이 재정의 오버라이드
         cout << "커피를 만듭니다." << endl;
     }
 };
 
 class Latte : public Drink {
 public:
-    Latte()
-        : Drink(LATTE)
-    {}
+    Latte(){}
 
-    string GetName() {
+    string GetName() override {
         return "라떼";
     }
 
-    void MakeADrink() {
+    void MakeADrink() override {
         cout << "라떼를 만듭니다." << endl;
     }
 };
 
 class Cola : public Drink {
 public:
-    Cola()
-        : Drink(COLA)
-    {}
+    Cola(){}
 
-    string GetName() {
+    string GetName() override {
         return "콜라";
     }
 
-    void MakeADrink() {
+    void MakeADrink() override {
         cout << "콜라를 만듭니다." << endl;
     }
 };
 
 class Tea : public Drink {
 public:
-    Tea()
-        : Drink(TEA)
-    {}
+    Tea(){}
 
-    string GetName() {
+    string GetName() override {
         return "차";
     }
 
-    void MakeADrink() {
+    void MakeADrink() override {
         cout << "차를 만듭니다." << endl;
     }
 };
 
 class BanillaLatte : public Drink {
 public:
-    BanillaLatte()
-        : Drink(BANILLALATTE)
-    {}
+    BanillaLatte(){}
 
-    string GetName() {
+    string GetName() override  {
         return "바닐라라떼";
     }
 
-    void MakeADrink() {
+    void MakeADrink() override {
         cout << "바닐라라떼를 만듭니다." << endl;
+    }
+};
+
+class Cidar : public Drink {
+public:
+    Cidar(){}
+
+    string GetName() override {
+        return "사이다";
+    }
+
+    void MakeADrink() override {
+        cout << "사이다를 만듭니다." << endl;
     }
 };
 
@@ -125,32 +113,7 @@ class Barista {
 public:
     void MakeADrink(Drink& drink) {
         cout << "음료 만드는 것을 음료에게 요청합니다." << endl;
-        switch (drink.GetType())
-        {
-        // 다운캐스팅으로 원래 타입으로 형변환후
-        // GetName()멤버함수를 호출.
-        case COFFEE:
-            //cout << ((Coffee&)drink).GetName() << "를 만듭니다." << endl;
-            ((Coffee&)drink).MakeADrink();
-            break;
-        case LATTE:
-            //cout << ((Latte&)drink).GetName() << "를 만듭니다." << endl;
-            ((Latte&)drink).MakeADrink();
-            break;
-        case COLA:
-            //cout << ((Cola&)drink).GetName() << "를 만듭니다." << endl;
-            ((Cola&)drink).MakeADrink();
-            break;
-        case TEA:
-            //cout << ((Tea&)drink).GetName() << "를 만듭니다." << endl;
-            ((Tea&)drink).MakeADrink();
-            break;
-        case BANILLALATTE:
-            //cout << ((BanillaLatte&)drink).GetName() << "를 만듭니다." << endl;
-            ((BanillaLatte&)drink).MakeADrink();
-            break;
-        }
-        
+        drink.MakeADrink();
     }
 };
 
@@ -183,6 +146,7 @@ int main() {
     Cola cola;
     Tea tea;
     BanillaLatte banillalatte;
+    Cidar cidar;
 
     Barista bari;
     Cashier cashier(bari);   // 바리스타와 포함(참조)
@@ -198,6 +162,9 @@ int main() {
     guest.OrderingDrink(cashier, tea);
     cout << endl;
     guest.OrderingDrink(cashier, banillalatte);
+    cout << endl;
+    guest.OrderingDrink(cashier, cidar);
+    cout << endl;
 
 
     return 0;
