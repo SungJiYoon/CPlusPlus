@@ -76,10 +76,12 @@ void FuncPrint(Child3& ref) { // 오버로딩
 // 가상함수 호출
 void FuncVPrint1(Parent& ref) { // 가상함수는 들어오는 타입에 준해서 작동한다.(실행중에 인자값이 들어온다.) 그래서 실행파일 만들 때 결정할 수가 없음.
     ref.VPrint1(); // 결정이 유보된다. 동적바인딩 : 실행중에 어느 함수를 호출할지 결정하는 것
+    //ref.__vfptr[0]();
 }
 
 void FuncVPrint2(Parent& ref) {
     ref.VPrint2();
+    //ref.__vfptr[1]();
 }
 
 int main() {

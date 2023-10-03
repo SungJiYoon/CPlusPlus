@@ -17,36 +17,38 @@ using namespace std;
 
 // Barista, Cashier, guest
 
+// 순수가상함수를 하나라도 가지고 있는 클래스를 
+// 추상 클래스라고 합니다.
+// 추상클래스는 자신의 객체를 만들수 있는 능력은 상실됩니다.
+// 자신에게서 상속받은 자식들은 자신의 순수가상함수를 반드시 구현
+// 하도록 강제하는 능력이 생깁니다.
 
 class Drink {
 public:
-    Drink(){}
+    Drink() {}
 
-    virtual string GetName() {
-        return "음료";
-    }
+    virtual string GetName() = 0; // 순수가상함수 : 구현부가 없는 가상함수
 
-    virtual void MakeADrink() { // 가상함수
-        cout << "음료를 만듭니다." << endl;
-    }
+    virtual void MakeADrink() = 0; // 순수가상함수
 };
 
 class Coffee : public Drink {
 public:
-    Coffee(){}
+    Coffee() {}
 
     string GetName() override {
         return "커피";
     }
 
-    void MakeADrink() override {  // 부모의 가상함수를 자식이 재정의 오버라이드
+    void MakeADrink() override {   // 부모의 가상함수를 자식이 재정의 오버라이드
         cout << "커피를 만듭니다." << endl;
     }
+
 };
 
 class Latte : public Drink {
 public:
-    Latte(){}
+    Latte() {}
 
     string GetName() override {
         return "라떼";
@@ -55,11 +57,12 @@ public:
     void MakeADrink() override {
         cout << "라떼를 만듭니다." << endl;
     }
+
 };
 
 class Cola : public Drink {
 public:
-    Cola(){}
+    Cola() {}
 
     string GetName() override {
         return "콜라";
@@ -68,11 +71,12 @@ public:
     void MakeADrink() override {
         cout << "콜라를 만듭니다." << endl;
     }
+
 };
 
 class Tea : public Drink {
 public:
-    Tea(){}
+    Tea() {}
 
     string GetName() override {
         return "차";
@@ -85,9 +89,9 @@ public:
 
 class BanillaLatte : public Drink {
 public:
-    BanillaLatte(){}
+    BanillaLatte() {}
 
-    string GetName() override  {
+    string GetName() override {
         return "바닐라라떼";
     }
 
@@ -98,7 +102,7 @@ public:
 
 class Cidar : public Drink {
 public:
-    Cidar(){}
+    Cidar() {}
 
     string GetName() override {
         return "사이다";
@@ -109,10 +113,20 @@ public:
     }
 };
 
+// Americano 클래스에 GetName(), MakeADrink() 가상함수를 
+// 재정의 하지 않아도 작동상에는 문제가 없습니다.
+// Drink에서 상속받은 클래스들은 반드시 GetName, MakeADrink 함수를 만들도록 강제
+// 해야할 필요성이 있습니다.
+class Americano : public Drink {
+public:
+    Americano() {}
+
+};
+
 class Barista {
 public:
     void MakeADrink(Drink& drink) {
-        cout << "음료 만드는 것을 음료에게 요청합니다." << endl;
+        cout << "음료 만드는 것을 음료에게 요청합니다. " << endl;
         drink.MakeADrink();
     }
 };
@@ -139,14 +153,18 @@ public:
     }
 };
 
-
 int main() {
+
+    //Drink drink; // 추상클래스의 객체는 만들수 없습니다.
+
     Coffee coffee;
     Latte latte;
     Cola cola;
     Tea tea;
     BanillaLatte banillalatte;
     Cidar cidar;
+    //Americano americano;
+
 
     Barista bari;
     Cashier cashier(bari);   // 바리스타와 포함(참조)
@@ -165,6 +183,7 @@ int main() {
     cout << endl;
     guest.OrderingDrink(cashier, cidar);
     cout << endl;
+    //guest.OrderingDrink(cashier, americano);
 
 
     return 0;
