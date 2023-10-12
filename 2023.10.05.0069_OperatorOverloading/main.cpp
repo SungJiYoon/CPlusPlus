@@ -19,6 +19,12 @@ public:
         delete[] _parr;
     }
 
+    // array = array2 를 하면 카피를 하게끔 하고 싶다.
+    // 그러기 위해서는 일단 array에 있던 동적 메모리 공간을 없앤다.
+    // array2에 맞춰서 동적 메모리 공간을 다시 만든다.
+    // array2에 10과 1000번지 주소값을 가지고 있다 치면
+    // array에 10을 복사하고, 주소번지는 3000번(다른주소)로 하고,
+    // array2의 1000번지에 있던 값을 그대로 복사한다.
     DynamicArray& operator=(DynamicArray& rightValue) {
         cout << "DynamicArray& operator=(DynamicArray& rightValue)" << endl;
         delete[] _parr;   // 기존의 동적배열을 삭제
@@ -32,10 +38,12 @@ public:
             _parr[i] = rightValue._parr[i];
         }
 
+        // 대입 연산자를 쭉 이어서 쓸 수 있기 때문에
+        // 지금 이 함수를 호출한 애를 리턴한다.
         return *this;
     }
 
-    // 배열 첨자연산자를 연산자 오버로딩
+    // 배열 첨자연산자를 연산자 오버로딩(객체를 배열형식으로 사용할 수 있음)
     int& operator[](int index) {
         return _parr[index];
     }
@@ -84,6 +92,8 @@ int main() {
     array2[2] = 1000;
     array3[2] = 4000;
 
+    array3.operator[](2) = 4000; //<= 설명
+
     cout << "array3 = ";
     array3.Info();
 
@@ -92,10 +102,6 @@ int main() {
 
     cout << "array = ";
     array.Info();
-
-
-
-
 
     return 0;
 }

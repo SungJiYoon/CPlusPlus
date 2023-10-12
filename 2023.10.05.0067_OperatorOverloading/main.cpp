@@ -19,6 +19,11 @@ public:
     }
 
     // 뺄셈 연산자를 오버로딩 하고 뺄셈 연산을 해서 출력해보세요..
+    Complex& operator-(Complex& rightValue) {
+        Complex temp(_real - rightValue._real, _imaginary - rightValue._imaginary);
+
+        return temp;
+    }
 
     Complex& operator+(int real) {
         Complex temp(_real + real, _imaginary);
@@ -92,6 +97,10 @@ int main() {
     c = a.operator+(2);
 
     bool ret = a < b;
+
+    c = a - b;
+    c.Info();
+    cout << endl;
 
     return 0;
 }
